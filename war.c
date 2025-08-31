@@ -18,11 +18,11 @@
 
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 
 // --- Constantes Globais ---
 // Definem valores fixos para o número de territórios, missões e tamanho máximo de strings, facilitando a manutenção.
 
-#define NUM_TERRITORIOS 5
 #define TAM_NOME 30
 #define TAM_COR 10
 
@@ -53,12 +53,16 @@ int main() {
     // - Aloca a memória para o mapa do mundo e verifica se a alocação foi bem-sucedida.
     // - Preenche os territórios com seus dados iniciais (tropas, donos, etc.).
     // - Define a cor do jogador e sorteia sua missão secreta.
-
-    Territorio mapa[NUM_TERRITORIOS];
+    Territorio *mapa;
+    int num_territorios;
 
     printf("\n--- CADASTRO DE TERRITORIOS ---\n");
+    printf("\nNúmero de territorios: ");
+    scanf("%d", &num_territorios);
 
-    for(int i = 0; i< NUM_TERRITORIOS; i++){
+    mapa = (Territorio *) calloc(num_territorios, sizeof(Territorio));
+
+    for(int i = 0; i < num_territorios; i++){
         printf("\n    Territorio %d\n", i + 1);
 
         printf("\nNome do territótio: ");
@@ -73,7 +77,7 @@ int main() {
 
     printf("\n--- TERRITORIOS CADASTRADOS ---\n");
 
-    for(int i = 0; i< NUM_TERRITORIOS; i++){
+    for(int i = 0; i< num_territorios; i++){
         printf("\n    Territorio %d\n", i + 1);
         printf("\n - Nome: %s\n", mapa[i].nome);
         printf(" - Cor do Exercito: %s\n", mapa[i].cor);
