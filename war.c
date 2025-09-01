@@ -57,6 +57,14 @@ void cadastrarTerritorio(Territorio *mapa,int num_territorios){
     };    
 }
 
+void exibirMapa(const Territorio *mapa, int num_territorios){
+    for(int i = 0; i< num_territorios; i++){
+        printf("\n    Territorio %d\n", i + 1);
+        printf("\n - Nome: %s\n", mapa[i].nome);
+        printf(" - Cor do Exercito: %s\n", mapa[i].cor);
+        printf(" - Número de Tropas: %d\n", mapa[i].tropas);
+    };    
+}
 // --- Função Principal (main) ---
 // Função principal que orquestra o fluxo do jogo, chamando as outras funções em ordem.
 
@@ -68,6 +76,7 @@ int main() {
     // - Aloca a memória para o mapa do mundo e verifica se a alocação foi bem-sucedida.
     // - Preenche os territórios com seus dados iniciais (tropas, donos, etc.).
     // - Define a cor do jogador e sorteia sua missão secreta.
+    
     Territorio *mapa;
     int num_territorios;
 
@@ -81,12 +90,7 @@ int main() {
 
     printf("\n--- TERRITORIOS CADASTRADOS ---\n");
 
-    for(int i = 0; i< num_territorios; i++){
-        printf("\n    Territorio %d\n", i + 1);
-        printf("\n - Nome: %s\n", mapa[i].nome);
-        printf(" - Cor do Exercito: %s\n", mapa[i].cor);
-        printf(" - Número de Tropas: %d\n", mapa[i].tropas);
-    };    
+    exibirMapa(mapa, num_territorios);
 
     // 2. Laço Principal do Jogo (Game Loop):
     // - Roda em um loop 'do-while' que continua até o jogador sair (opção 0) ou vencer.
