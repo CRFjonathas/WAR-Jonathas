@@ -42,6 +42,21 @@ typedef struct{
 // Funções de lógica principal do jogo:
 // Função utilitária:
 
+void cadastrarTerritorio(Territorio *mapa,int num_territorios){
+    for(int i = 0; i < num_territorios; i++){
+        printf("\n    Territorio %d\n", i + 1);
+
+        printf("\nNome do território: ");
+        scanf("%s", mapa[i].nome);
+
+        printf("Cor do Exercito: ");
+        scanf("%s", mapa[i].cor);
+
+        printf("Número de Tropas: ");
+        scanf("%d", &mapa[i].tropas);
+    };    
+}
+
 // --- Função Principal (main) ---
 // Função principal que orquestra o fluxo do jogo, chamando as outras funções em ordem.
 
@@ -62,18 +77,7 @@ int main() {
 
     mapa = (Territorio *) calloc(num_territorios, sizeof(Territorio));
 
-    for(int i = 0; i < num_territorios; i++){
-        printf("\n    Territorio %d\n", i + 1);
-
-        printf("\nNome do territótio: ");
-        scanf("%s", mapa[i].nome);
-
-        printf("Cor do Exercito: ");
-        scanf("%s", mapa[i].cor);
-
-        printf("Número de Tropas: ");
-        scanf("%d", &mapa[i].tropas);
-    };
+    cadastrarTerritorio(mapa, num_territorios);
 
     printf("\n--- TERRITORIOS CADASTRADOS ---\n");
 
