@@ -65,6 +65,15 @@ void exibirMapa(const Territorio *mapa, int num_territorios){
         printf(" - Número de Tropas: %d\n", mapa[i].tropas);
     };    
 }
+
+void exibirMenuPrincipal(int *opcao){
+    printf("\n      --- MENU ---\n\n");
+    printf(" - Opção 1: Iniciar a fase de ataque.\n");
+    printf(" - Opção 2: Verificar condição de vitória.\n");
+    printf(" - Opção 0: Sair do jogo.\n\n");
+    printf("SELECIONE UMA OPÇÃO: ");
+    scanf("%d", opcao);
+}
 // --- Função Principal (main) ---
 // Função principal que orquestra o fluxo do jogo, chamando as outras funções em ordem.
 
@@ -79,6 +88,8 @@ int main() {
     
     Territorio *mapa;
     int num_territorios;
+    int opcao;
+    srand(time(NULL));
 
     printf("\n--- CADASTRO DE TERRITORIOS ---\n");
     printf("\nNúmero de territorios: ");
@@ -100,6 +111,25 @@ int main() {
     //   - Opção 2: Verifica se a condição de vitória foi alcançada e informa o jogador.
     //   - Opção 0: Encerra o jogo.
     // - Pausa a execução para que o jogador possa ler os resultados antes da próxima rodada.
+
+    do {
+        exibirMapa(mapa, num_territorios);
+        exibirMenuPrincipal(&opcao);
+        switch (opcao){
+        case 1:
+            /* code */
+            break;
+        case 2:
+            /* code */
+            break;
+        case 0:
+            /* code */
+            break;    
+        default:
+            break;
+        }
+    } while(opcao != 0);
+        exibirMapa(mapa, num_territorios);
 
     // 3. Limpeza:
     // - Ao final do jogo, libera a memória alocada para o mapa para evitar vazamentos de memória.
