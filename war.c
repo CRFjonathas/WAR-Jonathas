@@ -67,12 +67,33 @@ void exibirMapa(const Territorio *mapa, int num_territorios){
 }
 
 void exibirMenuPrincipal(int *opcao){
-    printf("\n      --- MENU ---\n\n");
+    printf("\n          --- MENU ---\n\n");
     printf(" - Opção 1: Iniciar a fase de ataque.\n");
     printf(" - Opção 2: Verificar condição de vitória.\n");
     printf(" - Opção 0: Sair do jogo.\n\n");
     printf("SELECIONE UMA OPÇÃO: ");
     scanf("%d", opcao);
+}
+
+void faseDeAtaque(Territorio *mapa, int num_territorios, int *indicieAtacante, int *indicieDefensor, int *opcao){
+    int dadoAtaque = (rand() % 6) + 1;
+    int dadoDefesa = (rand() % 6) + 1;
+
+    printf("\nNº do territorio atacante: ");
+    scanf("%d", indicieAtacante);
+
+    *indicieAtacante = *indicieAtacante - 1;
+
+    printf("\nNº do territorio defensor: ");
+    scanf("%d", indicieDefensor);
+
+    *indicieDefensor = *indicieDefensor - 1;
+
+    if (((*indicieAtacante >= num_territorios) || (*indicieAtacante < 0)) || ((*indicieDefensor >= num_territorios) || (*indicieDefensor < 0))){
+        printf("INDICIE INVÁLIDO! TENTE NOVAMENTE.");
+        return;
+    }
+    
 }
 // --- Função Principal (main) ---
 // Função principal que orquestra o fluxo do jogo, chamando as outras funções em ordem.
@@ -89,6 +110,9 @@ int main() {
     Territorio *mapa;
     int num_territorios;
     int opcao;
+    int indicieAtacante;
+    int indicieDefensor;
+    
     srand(time(NULL));
 
     printf("\n--- CADASTRO DE TERRITORIOS ---\n");
@@ -117,7 +141,7 @@ int main() {
         exibirMenuPrincipal(&opcao);
         switch (opcao){
         case 1:
-            /* code */
+            
             break;
         case 2:
             /* code */
@@ -128,7 +152,7 @@ int main() {
         default:
             break;
         }
-    } while(opcao != 0);
+    } while (opcao != 0);
         exibirMapa(mapa, num_territorios);
 
     // 3. Limpeza:
