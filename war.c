@@ -75,25 +75,57 @@ void exibirMenuPrincipal(int *opcao){
     scanf("%d", opcao);
 }
 
-void faseDeAtaque(Territorio *mapa, int num_territorios, int *indicieAtacante, int *indicieDefensor, int *opcao){
-    int dadoAtaque = (rand() % 6) + 1;
-    int dadoDefesa = (rand() % 6) + 1;
+void faseDeAtaque(Territorio *mapa, int num_territorios, int *indicieAtacante, int *indicieDefensor){
+    printf("\n --- FASE DE ATAQUE ---\n");
 
-    printf("\nNº do territorio atacante: ");
+    printf("\nEscolha o territorio atacante (1 a %d, ou 0 para sair):  ",num_territorios);
     scanf("%d", indicieAtacante);
+
+    if (*indicieAtacante == 0){
+        return;
+    }
 
     *indicieAtacante = *indicieAtacante - 1;
 
-    printf("\nNº do territorio defensor: ");
+    printf("\nEscolha o territorio atacante (1 a %d): ", num_territorios);
     scanf("%d", indicieDefensor);
 
     *indicieDefensor = *indicieDefensor - 1;
 
     if (((*indicieAtacante >= num_territorios) || (*indicieAtacante < 0)) || ((*indicieDefensor >= num_territorios) || (*indicieDefensor < 0))){
-        printf("INDICIE INVÁLIDO! TENTE NOVAMENTE.");
+        printf("\nINDICIE INVÁLIDO! TENTE NOVAMENTE.\n");
         return;
-    }
-    
+    } else if(mapa[*indicieAtacante].tropas <= 1){
+        printf("\nNÃO É POSSIVEL REALIZAR O ATAQUE COM MENOS DE 2 TROPAS!\n");
+        return;
+
+    } else {
+        int dadoAtaque = (rand() % 6) + 1;
+        int dadoDefesa = (rand() % 6) + 1;
+
+        printf(" \n--- RESULTADO DA BATALHA ---\n");
+        printf("\nO atacante %s rolou um dado e tiro: %d\n", mapa[*indicieAtacante].nome, dadoAtaque);
+        printf("O defensor %s rolou um dado e tiro: %d\n", mapa[*indicieDefensor].nome, dadoDefesa);
+
+        if (dadoAtaque >= dadoDefesa){
+            mapa[*indicieDefensor].tropas --;
+            printf("VITORIA DO ATAQUE! O defensor perdeu 1 tropa.\n");
+
+            if(mapa[*indicieDefensor].tropas == 0){
+                strcpy(mapa[*indicieDefensor].cor, mapa[*indicieAtacante].cor);
+                mapa[*indicieDefensor].tropas = mapa[*indicieAtacante].tropas / 2;
+                mapa[*indicieAtacante].tropas = mapa[*indicieAtacante].tropas / 2;
+                printf("CONQUISTA! O territorio %s foi conquistado pelo Exercito %s.",mapa[*indicieDefensor].nome, mapa[*indicieAtacante].cor);
+            }
+        } else{
+            mapa[*indicieAtacante].tropas --;
+            printf("VITORIA DA DEFESA! O atacante perdeu 1 tropa.\n");
+        }
+    } 
+}
+
+void liberarMemoria(Territorio* mapa){
+    free(mapa);
 }
 // --- Função Principal (main) ---
 // Função principal que orquestra o fluxo do jogo, chamando as outras funções em ordem.
@@ -125,7 +157,6 @@ int main() {
 
     printf("\n--- TERRITORIOS CADASTRADOS ---\n");
 
-    exibirMapa(mapa, num_territorios);
 
     // 2. Laço Principal do Jogo (Game Loop):
     // - Roda em um loop 'do-while' que continua até o jogador sair (opção 0) ou vencer.
@@ -141,7 +172,7 @@ int main() {
         exibirMenuPrincipal(&opcao);
         switch (opcao){
         case 1:
-            
+            faseDeAtaque(mapa, num_territorios, &indicieAtacante, &indicieDefensor);
             break;
         case 2:
             /* code */
@@ -157,7 +188,7 @@ int main() {
 
     // 3. Limpeza:
     // - Ao final do jogo, libera a memória alocada para o mapa para evitar vazamentos de memória.
-
+    liberarMemoria(mapa);
     return 0;
 }
 
