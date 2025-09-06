@@ -58,11 +58,11 @@ void cadastrarTerritorio(Territorio *mapa,int num_territorios){
 }
 
 void exibirMapa(const Territorio *mapa, int num_territorios){
+    printf("\n==================================================\n");
+    printf("            MAPA DO MUNDO - ESTADO ATUAL\n");
+    printf("==================================================\n\n");
     for(int i = 0; i< num_territorios; i++){
-        printf("\n    Territorio %d\n", i + 1);
-        printf("\n - Nome: %s\n", mapa[i].nome);
-        printf(" - Cor do Exercito: %s\n", mapa[i].cor);
-        printf(" - Número de Tropas: %d\n", mapa[i].tropas);
+        printf("%d. %s (Exercito %s, Tropas: %d)\n", i + 1, mapa[i].nome, mapa[i].cor, mapa[i].tropas);
     };    
 }
 
@@ -147,6 +147,10 @@ int main() {
     
     srand(time(NULL));
 
+    printf("\n==================================================\n");
+    printf("                     JOGO WAR\n");
+    printf("==================================================\n");
+
     printf("\n--- CADASTRO DE TERRITORIOS ---\n");
     printf("\nNúmero de territorios: ");
     scanf("%d", &num_territorios);
@@ -154,9 +158,6 @@ int main() {
     mapa = (Territorio *) calloc(num_territorios, sizeof(Territorio));
 
     cadastrarTerritorio(mapa, num_territorios);
-
-    printf("\n--- TERRITORIOS CADASTRADOS ---\n");
-
 
     // 2. Laço Principal do Jogo (Game Loop):
     // - Roda em um loop 'do-while' que continua até o jogador sair (opção 0) ou vencer.
